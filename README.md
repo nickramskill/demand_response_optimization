@@ -1,7 +1,7 @@
 # Data Center Demand Response Optimization
 
 This project models and solves a **linear optimization problem** to minimize electricity costs for a data center located in the Houston zone of ERCOT (uses ERCOT Houston Hub prices from 3/1/2025)
----
+
 
 ## Problem Statement
 
@@ -13,7 +13,6 @@ The goal is to **optimize the hourly power consumption** of a data center over a
 - Enforcing operational constraints (min/max load)  
 - Ensuring all shifted load is eventually recovered
 
----
 
 ## Model Formulation
 
@@ -45,4 +44,5 @@ Where:
   \sum f_t = \sum f_{t-1}
   \]
 
----
+-- 
+
