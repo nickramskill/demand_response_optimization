@@ -1,3 +1,4 @@
+
 # 💡 Data Center Demand Response Optimization
 
 This project models and solves a **linear optimization problem** to minimize electricity costs for a data center while participating in **demand response (DR)** programs. It uses **Pyomo**, a Python-based optimization modeling language.
@@ -19,47 +20,44 @@ The goal is to **optimize the hourly power consumption** of a data center over a
 ## 🧠 Mathematical Formulation
 
 Let:
-- \( T \): number of time periods (hours)
-- \( p_t \): price at time \( t \)
-- \( l_t \): load served at time \( t \)
-- \( s_t \): load shed at time \( t \)
-- \( f_t \): load shifted out at time \( t \)
-- \( f_{t-1} \): load shifted in from previous time
-- \( d_t \): baseline demand at time \( t \)
-- \( c_s \): cost per unit of shed load
-- \( c_f \): cost per unit of shifted load
 
----
+- `T`: number of time periods (hours)
+- `p_t`: price at time `t`
+- `l_t`: load served at time `t`
+- `s_t`: load shed at time `t`
+- `f_t`: load shifted out at time `t`
+- `f_{t-1}`: load shifted in from previous time
+- `d_t`: baseline demand at time `t`
+- `c_s`: cost per unit of shed load
+- `c_f`: cost per unit of shifted load
 
 ### 🎯 Objective Function
 
 Minimize the total cost:
 
-\[
-\text{Minimize:} \quad \sum_{t=1}^{T} \left( p_t \cdot l_t + c_s \cdot s_t + c_f \cdot f_t \right)
-\]
-
----
+```
+Minimize:  ∑ [ p_t * l_t + c_s * s_t + c_f * f_t ]
+```
 
 ### 📏 Constraints
 
 **1. Load Balance (with shift-in and shift-out):**
 
-\[
-l_t = d_t - s_t - f_t + f_{t-1} \quad \forall t \in \{1, \ldots, T\}
-\]
+```
+l_t = d_t - s_t - f_t + f_{t-1}   for all t
+```
 
 **2. Load Limits:**
 
-\[
-L_{\min} \leq l_t \leq L_{\max} \quad \forall t
-\]
+```
+L_min ≤ l_t ≤ L_max
+```
 
-**3. Shift Recovery (no lost deferred load):**
+**3. Shift Recovery:**
 
-\[
-\sum_{t=1}^{T} f_t = \sum_{t=1}^{T} f_{t-1}
-\]
+```
+∑ f_t = ∑ f_{t-1}
+```
 
 ---
 
@@ -74,3 +72,55 @@ Install them with:
 
 ```bash
 pip install pyomo matplotlib numpy
+```
+
+Install a solver (e.g., **GLPK**):
+
+```bash
+brew install glpk   # on macOS
+```
+
+---
+
+## 🚀 How to Run
+
+```bash
+python optimize_dr.py
+```
+
+The script will:
+- Solve the model using Pyomo
+- Plot demand vs. price with a second Y-axis
+- Save the figure as `demand_response_optimization.png`
+
+---
+
+## 📊 Outputs
+
+- Optimized demand profile
+- Bar chart of shed and deferred load
+- Second y-axis showing price
+- PNG figure saved to the project directory
+
+---
+
+## ✨ Future Enhancements
+
+- Add battery storage optimization
+- Integrate real-time electricity prices from ERCOT/NYISO APIs
+- Support multi-day or rolling horizon scheduling
+- Include emissions minimization or carbon pricing
+
+---
+
+## 📜 License
+
+MIT License
+
+---
+
+## 👤 Author
+
+**Your Name**  
+Email: yourname@example.com  
+GitHub: [@yourusername](https://github.com/yourusername)
