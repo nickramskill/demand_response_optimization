@@ -17,7 +17,7 @@ Optimize the hourly power consumption of a data center in the ERCOT Houston Hub 
 - `price_data`: ERCOT Houston Hub price 
 - `load_optimized`: optimized load
 - `load_shed`: load shed 
-- `load_deferred`: load deferred 
+- `load_defer`: load deferred 
 - `base_load`: baseline load
 - `shed_cost`: cost per unit of shed load
 - `defer_cost`: cost per unit of shifted load
