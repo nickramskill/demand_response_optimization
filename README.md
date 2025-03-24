@@ -57,4 +57,5 @@ min_load ≤ load_optimized ≤ max_load
 ## Notes
 - Python 3.12.8
 - Pyomo to formulate the optimization model and cbc as the solver
+- Create venv and install requirements.txt
 - Run as: python demand_response_optimization.py
