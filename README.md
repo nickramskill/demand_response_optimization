@@ -34,10 +34,10 @@ Minimize:  ∑ [ price_data[t] * load_optimized[t] + shed_cost * load_shed[t] + 
 
 ### Constraints
 
-**1. Load Balance (with shift-in and shift-out):**
+**1. Load Balance:**
 
 ```
-load_optimized[t] = base_load[t] - load_shed[t] - load_defer[t] + load_defer[t-1]   for all t
+load_optimized[t] = base_load[t] - load_shed[t] - load_defer[t] + load_defer[t-1] for all t
 ```
 
 **2. Load Limits:**
@@ -46,7 +46,7 @@ load_optimized[t] = base_load[t] - load_shed[t] - load_defer[t] + load_defer[t-1
 min_load ≤ load_optimized ≤ max_load
 ```
 
-**3. Shift Recovery:**
+**3. Deferred Load Recovery:**
 
 ```
 ∑ load_defer[t] = ∑ load_defer[t-1]
