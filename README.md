@@ -1,13 +1,7 @@
 
 # 💡 Data Center Demand Response Optimization
 
-This project models and solves a **linear optimization problem** to minimize electricity costs for a data center while participating in **demand response (DR)** programs. It uses **Pyomo**, a Python-based optimization modeling language.
-
----
-
-## 📈 Problem Statement
-
-The goal is to **optimize the hourly power consumption** of a data center over a 24-hour period by:
+Optimize the hourly power consumption of a data center in the ERCOT Houston Hub load zone over a 24-hour period by:
 
 - Shifting load to lower-price hours  
 - Shedding non-critical load (at a cost)  
@@ -17,110 +11,51 @@ The goal is to **optimize the hourly power consumption** of a data center over a
 
 ---
 
-## 🧠 Mathematical Formulation
+## Optimization Model
 
-Let:
+- `time_axis`: time intervals (hours)
+- `price_data`: ERCOT Houston Hub price 
+- `load_optimized`: optimized load
+- `load_shed`: load shed 
+- `load_deferred`: load deferred 
+- `base_load`: baseline load
+- `shed_cost`: cost per unit of shed load
+- `defer_cost`: cost per unit of shifted load
+- `min_load`: minimum operational load of the data center
+- `max_load`: maximum operational load of the data center
 
-- `T`: number of time periods (hours)
-- `p_t`: price at time `t`
-- `l_t`: load served at time `t`
-- `s_t`: load shed at time `t`
-- `f_t`: load shifted out at time `t`
-- `f_{t-1}`: load shifted in from previous time
-- `d_t`: baseline demand at time `t`
-- `c_s`: cost per unit of shed load
-- `c_f`: cost per unit of shifted load
-
-### 🎯 Objective Function
+### Objective Function
 
 Minimize the total cost:
 
 ```
-Minimize:  ∑ [ p_t * l_t + c_s * s_t + c_f * f_t ]
+Minimize:  ∑ [ price_data[t] * load_optimized[t] + shed_cost * load_shed[t] + load_cost * load_defer[t] ]
 ```
 
-### 📏 Constraints
+### Constraints
 
 **1. Load Balance (with shift-in and shift-out):**
 
 ```
-l_t = d_t - s_t - f_t + f_{t-1}   for all t
+load_optimized[t] = base_load[t] - load_shed[t] - load_defer[t] + load_defer[t-1]   for all t
 ```
 
 **2. Load Limits:**
 
 ```
-L_min ≤ l_t ≤ L_max
+min_load ≤ load_optimized ≤ max_load
 ```
 
 **3. Shift Recovery:**
 
 ```
-∑ f_t = ∑ f_{t-1}
+∑ load_defer[t] = ∑ load_defer[t-1]
 ```
 
 ---
 
-## 🧰 Dependencies
+## Notes
 
-- Python 3.8+
-- [Pyomo](http://www.pyomo.org/)
-- matplotlib
-- numpy
-
-Install them with:
-
-```bash
-pip install pyomo matplotlib numpy
+- Pyomo to formulate the optimization model and cbc as the solver
+- Run as: python demand_response_optimization.py
 ```
-
-Install a solver (e.g., **GLPK**):
-
-```bash
-brew install glpk   # on macOS
-```
-
----
-
-## 🚀 How to Run
-
-```bash
-python optimize_dr.py
-```
-
-The script will:
-- Solve the model using Pyomo
-- Plot demand vs. price with a second Y-axis
-- Save the figure as `demand_response_optimization.png`
-
----
-
-## 📊 Outputs
-
-- Optimized demand profile
-- Bar chart of shed and deferred load
-- Second y-axis showing price
-- PNG figure saved to the project directory
-
----
-
-## ✨ Future Enhancements
-
-- Add battery storage optimization
-- Integrate real-time electricity prices from ERCOT/NYISO APIs
-- Support multi-day or rolling horizon scheduling
-- Include emissions minimization or carbon pricing
-
----
-
-## 📜 License
-
-MIT License
-
----
-
-## 👤 Author
-
-**Your Name**  
-Email: yourname@example.com  
-GitHub: [@yourusername](https://github.com/yourusername)
