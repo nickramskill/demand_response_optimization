@@ -1,5 +1,5 @@
 
-# 💡 Data Center Demand Response Optimization
+# Data Center Demand Response Optimization
 
 Optimize the hourly power consumption of a data center in the ERCOT Houston Hub load zone over a 24-hour period by:
 
@@ -58,4 +58,3 @@ min_load ≤ load_optimized ≤ max_load
 
 - Pyomo to formulate the optimization model and cbc as the solver
 - Run as: python demand_response_optimization.py
-```
